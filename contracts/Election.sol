@@ -17,7 +17,9 @@ contract Election {
 
   // candidate count for better lopping
   uint public candidatesCount;
-  
+
+  // adding an event for refreshing 
+  event addEvent(uint indexed _candidateId);
   constructor() public {
     addCandidate("Candidate 1");
     addCandidate("Candidate 2");
@@ -41,5 +43,8 @@ contract Election {
 
      // increase votecount of a candidate
      candidates[_candidateId].voteCount ++;
+
+     // adding an event 
+     emit addEvent(_candidateId);
   }
 }
