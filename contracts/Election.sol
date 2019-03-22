@@ -12,6 +12,9 @@ contract Election {
   // mapping for the candidates 
   mapping (uint=>Candidate) public candidates;
 
+  // mapping for voters
+  mapping(address => bool) public voters; 
+
   // candidate count for better lopping
   uint public candidatesCount;
   
@@ -24,5 +27,19 @@ contract Election {
   function addCandidate(string memory _name) private {
     candidatesCount ++;
     candidates[candidatesCount] = Candidate(candidatesCount, _name, 0);
+  }
+
+  // function to vote user
+  function vote(uint _candidateId) public {
+     require(! voters[msg.sender]); // check of double voting 
+
+     // check wether candidate is valid or not. 
+     require(_candidateId > 0 && _candidateId <= candidatesCount);
+
+     // add voters to vote cast array 
+     voters[msg.sender] = true;  
+
+     // increase votecount of a candidate
+     candidates[_candidateId].voteCount ++;
   }
 }
